@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  main:
+    banner-mode: off
+    lazy-initialization: true
+
+coin-demo:
+  info:
+    version-path: /coin-demo/version
+    release-time: "@RELEASE_TIME@"
+    release-version: "@version@"

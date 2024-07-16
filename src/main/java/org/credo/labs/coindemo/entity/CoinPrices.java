@@ -2,6 +2,8 @@ package org.credo.labs.coindemo.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.credo.labs.coindemo.price.enums.CurrencyCode;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -35,8 +38,9 @@ public class CoinPrices implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "code", nullable = false)
-    String code;
+    CurrencyCode code;
 
     @Column(name = "symbol", nullable = false)
     private String symbol;

@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.credo.labs.coindemo.coin_desk.vo.BpiCurrencyVO;
 import org.credo.labs.coindemo.entity.CoinPrices;
+import org.credo.labs.coindemo.price.enums.CurrencyCode;
 import org.credo.labs.coindemo.util.JsonUtils;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -46,7 +47,7 @@ class CoinPriceRepositoryTest {
         BpiCurrencyVO vo = JsonUtils.asObject(json, BpiCurrencyVO.class);
         //convert to CoinPrices
         entity = new CoinPrices();
-        entity.setCode(vo.getCode());
+        entity.setCode(CurrencyCode.valueOf(vo.getCode()));
         entity.setSymbol(vo.getSymbol());
         entity.setRate(vo.getRate());
         entity.setDescription(vo.getDescription());

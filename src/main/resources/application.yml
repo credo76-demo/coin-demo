@@ -11,3 +11,7 @@ coin-demo:
     version-path: /coin-demo/version
     release-time: "@RELEASE_TIME@"
     release-version: "@version@"
+
+  external:
+    coin-desk:
+      url: 'https://api.coindesk.com/v1/bpi/currentprice.json'

@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Index;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import java.io.Serial;
 import java.io.Serializable;
@@ -39,10 +41,10 @@ public class CoinPrices implements Serializable {
     Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "code", nullable = false)
+    @Column(name = "code", nullable = false, unique = true)
     CurrencyCode code;
 
-    @Column(name = "symbol", nullable = false)
+    @Column(name = "symbol", nullable = false, unique = true)
     private String symbol;
 
     @Column(name = "rate", nullable = false)
@@ -51,7 +53,7 @@ public class CoinPrices implements Serializable {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "rate_float", nullable = false)
+    @Column(name = "rate_float", nullable = false, precision = 18, scale = 4)
     private BigDecimal rateFloat;
 
     @Column(name = "updated", columnDefinition = "timestamp")
@@ -59,4 +61,15 @@ public class CoinPrices implements Serializable {
 
     @Column(name = "created", columnDefinition = "timestamp")
     private LocalDateTime created;
+
+    @PrePersist
+    protected void onCreate() {
+        created = LocalDateTime.now();
+        updated = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = LocalDateTime.now();
+    }
 }

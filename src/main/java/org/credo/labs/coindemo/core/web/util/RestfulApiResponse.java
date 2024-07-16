@@ -11,18 +11,18 @@ import lombok.ToString;
 @Getter
 @ToString(of = {"code", "message"})
 @NoArgsConstructor
-public class RestfulApiResponse implements Serializable {
+public class RestfulApiResponse<T> implements Serializable {
     @Serial
     private static final long serialVersionUID = 2356385155112020577L;
 
     private String code;
     private String message;
 
-    public RestfulApiResponse(String code, String message, Object data) {
+    public RestfulApiResponse(String code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
 
-    private Object data;
+    private T data;
 }

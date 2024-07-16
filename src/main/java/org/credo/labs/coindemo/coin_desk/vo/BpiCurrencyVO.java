@@ -24,4 +24,5 @@ public class BpiCurrencyVO implements Serializable {
     @JsonSerialize(using = BigDecimalSerializer.class)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal rateFloat;
+
 }

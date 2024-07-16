@@ -29,10 +29,10 @@ public class VersionController {
     @CrossOrigin
     @GetMapping
     public Version showVersion() {
-        Version version = Version.builder()
-                .releaseTime(releaseTime)
-                .releaseVersion(releaseVersion)
-                .build();
+        Version version = new Version();
+        version.setReleaseTime(releaseTime);
+        version.setReleaseVersion(releaseVersion);
+
 
         if (null != buildProperties) {
             version.setBuildTime(buildProperties.getTime().toString());

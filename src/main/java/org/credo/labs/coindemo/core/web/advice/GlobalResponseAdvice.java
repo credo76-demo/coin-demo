@@ -20,6 +20,7 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice<Object> {
      */
     @Override
     public boolean supports(MethodParameter returnType, Class converterType) {
+        if (returnType.getParameterType() == ErrorResponse.class) return true;
         return returnType.hasMethodAnnotation(ApiResponse.class);
     }
 

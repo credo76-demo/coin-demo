@@ -1,6 +1,7 @@
 package org.credo.labs.coindemo.price.service;
 
 import java.util.List;
+import java.util.Locale;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.credo.labs.coindemo.coin_desk.vo.BpiCurrencyVO;
@@ -9,6 +10,8 @@ import org.credo.labs.coindemo.core.exception.CoreErrorCodes;
 import org.credo.labs.coindemo.entity.CoinPrices;
 import org.credo.labs.coindemo.price.enums.CurrencyCode;
 import org.credo.labs.coindemo.repository.CoinPriceRepository;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +22,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CoinPriceServiceImpl implements CoinPriceService {
     final CoinPriceRepository repository;
+    final MessageSource messageSource;
 
-    public CoinPriceServiceImpl(CoinPriceRepository repository) {
+    public CoinPriceServiceImpl(CoinPriceRepository repository, MessageSource messageSource) {
         this.repository = repository;
+        this.messageSource = messageSource;
     }
 
     /**
@@ -39,9 +44,10 @@ public class CoinPriceServiceImpl implements CoinPriceService {
         coinPrices.setRate(vo.getRate());
         coinPrices.setDescription(vo.getDescription());
         coinPrices.setRateFloat(vo.getRateFloat());
-        return repository.saveAndFlush(coinPrices);
-    }
 
+        CoinPrices result = repository.saveAndFlush(coinPrices);
+        return convertCodeToI18n(result);
+    }
 
     /**
      * Save and update coin price.
@@ -61,9 +67,9 @@ public class CoinPriceServiceImpl implements CoinPriceService {
         coinPrices.setDescription(vo.getDescription());
         coinPrices.setRateFloat(vo.getRateFloat());
 
-        return repository.saveAndFlush(coinPrices);
+        CoinPrices result = repository.saveAndFlush(coinPrices);
+        return convertCodeToI18n(result);
     }
-
 
     /**
      * Get coin price by id.
@@ -73,7 +79,8 @@ public class CoinPriceServiceImpl implements CoinPriceService {
      */
     @Override
     public CoinPrices getCoinPriceById(Long id) {
-        return repository.findById(id).orElse(null);
+        CoinPrices coinPrices = repository.findById(id).orElse(null);
+        return convertCodeToI18n(coinPrices);
 
     }
 
@@ -85,7 +92,8 @@ public class CoinPriceServiceImpl implements CoinPriceService {
      */
     @Override
     public CoinPrices getCoinPriceByCode(CurrencyCode code) {
-        return repository.findByCode(code).orElse(null);
+        CoinPrices coinPrices = repository.findByCode(code).orElse(null);
+        return convertCodeToI18n(coinPrices);
     }
 
     /**
@@ -106,7 +114,25 @@ public class CoinPriceServiceImpl implements CoinPriceService {
      */
     @Override
     public List<CoinPrices> getAllCoinPrices() {
-        return repository.findAll();
+        List<CoinPrices> list = repository.findAll();
+        list.forEach(coinPrices -> convertCodeToI18n(coinPrices));
+        return list;
+    }
+
+    /**
+     * Convert code to i18n.
+     *
+     * @return
+     */
+    private CoinPrices convertCodeToI18n(CoinPrices coinPrices) {
+        if (null == coinPrices) return null;
+
+        Locale locale = LocaleContextHolder.getLocale();
+
+        String codeName = messageSource.getMessage(coinPrices.getCode().name(), null, locale);
+        coinPrices.setCodeName(codeName);
+
+        return coinPrices;
     }
 
 }

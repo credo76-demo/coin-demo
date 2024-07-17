@@ -176,21 +176,22 @@ components:
             - "GBP"
             - "JPY"
             - "BTC"
-          example: "JPY"
-        codeName:
-          description: "Currency I18N name"
-          type: "string"
+          example: "USD"
         symbol:
           type: "string"
+          example: "&#36;"
         rate:
           type: "string"
+          example: "64,246.756"
         description:
           type: "string"
+          example: "United States Dollar"
         rateFloat:
           $ref: "#/components/schemas/BigDecimal"
         updated:
           type: "string"
           format: "yyyy/MM/dd HH:mm:ss"
+          example: "2021/01/01 00:00:00"
         created:
           type: "string"
           format: "yyyy/MM/dd HH:mm:ss"

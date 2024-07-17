@@ -32,9 +32,10 @@ CREATE INDEX idx_code ON coin_prices (code);
 
 CREATE INDEX idx_updated ON coin_prices (updated);
 ```
-### 2. Feature
+### 2. Content
+- OpenAPI 3.0 Docs: [http://localhost:8080/index.html](http://localhost:8080/index.html)
 - The main API Controller: `CoinPriceController.java`
-- Openapi Specification: `spec/coin_demo-openapi.yaml`
+- OpenAPI 3.0 Specification: `spec/coin_demo-openapi.yaml`
 - Scheduled Task: `ScheduledTasks.java`
   
 ### 3. Testing

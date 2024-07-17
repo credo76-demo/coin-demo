@@ -49,6 +49,20 @@ public class CoinPriceServiceImpl implements CoinPriceService {
         return convertCodeToI18n(result);
     }
 
+    @Override
+    @Transactional
+    public void updateAll(List<CoinPrice> coinPrices) {
+        for (CoinPrice coinPrice : coinPrices) {
+            repository.upsertByCode(
+                    coinPrice.getCode().name(),
+                    coinPrice.getSymbol(),
+                    coinPrice.getRate(),
+                    coinPrice.getDescription(),
+                    coinPrice.getRateFloat()
+            );
+        }
+    }
+
     /**
      * Save and update coin price.
      *
@@ -114,7 +128,7 @@ public class CoinPriceServiceImpl implements CoinPriceService {
      */
     @Override
     public List<CoinPrice> getAllCoinPrices() {
-        List<CoinPrice> list = repository.findAll();
+        List<CoinPrice> list = repository.findAllByOrderByCodeAsc();
         list.forEach(coinPrices -> convertCodeToI18n(coinPrices));
         return list;
     }

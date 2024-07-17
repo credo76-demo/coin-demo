@@ -8,17 +8,17 @@ import org.credo.labs.coindemo.price.enums.CurrencyCode;
 
 public interface CoinPriceService {
 
-    @Transactional
     CoinPrice create(BpiCurrencyVO vo);
 
     @Transactional
+    void updateAll(List<CoinPrice> coinPrices);
+
     CoinPrice update(Long id, BpiCurrencyVO vo);
 
     CoinPrice getCoinPriceById(Long id);
 
     CoinPrice getCoinPriceByCode(CurrencyCode code);
 
-    @Transactional
     void deleteCoinPriceById(Long id);
 
     List<CoinPrice> getAllCoinPrices();

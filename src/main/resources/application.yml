@@ -46,6 +46,9 @@ coin-demo:
     version-path: /coin-demo/version
     release-time: "@RELEASE_TIME@"
     release-version: "@version@"
+  scheduling:
+    enabled: true
+    interval: 5000
 
   external:
     coin-desk:

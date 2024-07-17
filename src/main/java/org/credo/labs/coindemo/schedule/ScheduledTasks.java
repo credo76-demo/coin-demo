@@ -1,17 +1,10 @@
 package org.credo.labs.coindemo.schedule;
 
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
-import org.credo.labs.coindemo.coin_desk.service.CoinDeskService;
-import org.credo.labs.coindemo.coin_desk.vo.BpiCurrencyVO;
-import org.credo.labs.coindemo.coin_desk.vo.CoinDeskResponseVO;
 import org.credo.labs.coindemo.config.SchedulingConfig;
-import org.credo.labs.coindemo.entity.CoinPrice;
-import org.credo.labs.coindemo.price.enums.CurrencyCode;
-import org.credo.labs.coindemo.price.service.CoinPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -23,17 +16,15 @@ public class ScheduledTasks {
 
     private final SchedulingConfig schedulingConfig;
     private final ThreadPoolTaskScheduler taskScheduler;
+    final AbstractPriceProvider coinPriceProvider;
 
     @Autowired
-    CoinDeskService coinDeskService;
-
-    @Autowired
-    CoinPriceService coinPriceService;
-
-    @Autowired
-    public ScheduledTasks(SchedulingConfig schedulingConfig, ThreadPoolTaskScheduler taskScheduler) {
+    public ScheduledTasks(SchedulingConfig schedulingConfig,
+                          ThreadPoolTaskScheduler taskScheduler,
+                          @Qualifier("coinDeskProvider") AbstractPriceProvider coinPriceProvider) {
         this.schedulingConfig = schedulingConfig;
         this.taskScheduler = taskScheduler;
+        this.coinPriceProvider = coinPriceProvider;
     }
 
     @EventListener(ApplicationReadyEvent.class)
@@ -54,22 +45,8 @@ public class ScheduledTasks {
         log.info("Scheduled task {} - executed at: {}", uuid, System.currentTimeMillis());
 
         try { //sync with CoinDesk API
-            CoinDeskResponseVO targetVO = coinDeskService.fetchCoinPrice();
-            if (null == targetVO) return;
-
-            List<CoinPrice> coinPrices = targetVO.getBpi().values().stream().map((BpiCurrencyVO vo) -> {
-                CoinPrice coinPrice = new CoinPrice();
-                coinPrice.setCode(CurrencyCode.valueOf(vo.getCode()));
-                coinPrice.setSymbol(vo.getSymbol());
-                coinPrice.setRate(vo.getRate());
-                coinPrice.setDescription(vo.getDescription());
-                coinPrice.setRateFloat(vo.getRateFloat());
-                return coinPrice;
-            }).collect(Collectors.toList());
-
-            coinPriceService.updateAll(coinPrices);
-
-            log.info("Scheduled task {} - Coin prices saved: {}", uuid, coinPrices.size());
+            int size = coinPriceProvider.execute(uuid);
+            log.info("Scheduled task {} - Coin prices saved: {}", uuid, size);
         } catch (Exception e) {
             log.error("Error occurred while processing scheduled task " + uuid, e);
             throw new RuntimeException(e);

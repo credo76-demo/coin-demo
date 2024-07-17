@@ -11,7 +11,6 @@ import jakarta.persistence.Index;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 import java.io.Serial;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -45,11 +44,6 @@ public class CoinPrice implements Serializable {
     @Column(name = "code", nullable = false, unique = true)
     CurrencyCode code;
 
-    /**
-     * i18n code name
-     */
-    @Transient
-    String codeName;
 
     @Column(name = "symbol", nullable = false, unique = true)
     private String symbol;

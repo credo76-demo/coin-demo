@@ -144,7 +144,7 @@ public class CoinPriceServiceImpl implements CoinPriceService {
         Locale locale = LocaleContextHolder.getLocale();
 
         String codeName = messageSource.getMessage(coinPrice.getCode().name(), null, locale);
-        coinPrice.setCodeName(codeName);
+        coinPrice.setDescription(codeName);
 
         return coinPrice;
     }

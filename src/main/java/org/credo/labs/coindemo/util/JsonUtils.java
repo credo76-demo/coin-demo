@@ -31,6 +31,7 @@ import org.credo.labs.coindemo.core.exception.ApiException;
 import org.springframework.data.util.Pair;
 
 import static org.credo.labs.coindemo.core.exception.CoreErrorCodes.READ_JSON_FAILED;
+import static org.credo.labs.coindemo.util.DateUtils.DATETIME_DB_PATTERN;
 import static org.credo.labs.coindemo.util.DateUtils.DATETIME_ISO_PATTERN;
 import static org.credo.labs.coindemo.util.DateUtils.DATE_ISO_PATTERN;
 
@@ -46,7 +47,7 @@ public class JsonUtils {
 
 
     public static ObjectMapper getObjectMapper() {
-        return configObjectMapper(false, false, DATE_ISO_PATTERN, DATETIME_ISO_PATTERN);
+        return configObjectMapper(false, false, DATE_ISO_PATTERN, DATETIME_DB_PATTERN);
     }
 
     public static ObjectMapper configObjectMapper(Boolean excludeNull

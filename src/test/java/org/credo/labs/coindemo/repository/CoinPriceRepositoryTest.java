@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.credo.labs.coindemo.coin_desk.vo.BpiCurrencyVO;
-import org.credo.labs.coindemo.entity.CoinPrices;
+import org.credo.labs.coindemo.entity.CoinPrice;
 import org.credo.labs.coindemo.price.enums.CurrencyCode;
 import org.credo.labs.coindemo.util.JsonUtils;
 import org.junit.jupiter.api.MethodOrderer;
@@ -29,7 +29,7 @@ class CoinPriceRepositoryTest {
     @Autowired
     private CoinPriceRepository coinPriceRepository;
 
-    private CoinPrices entity;
+    private CoinPrice entity;
 
     @Test
     @Order(1)
@@ -46,7 +46,7 @@ class CoinPriceRepositoryTest {
 
         BpiCurrencyVO vo = JsonUtils.asObject(json, BpiCurrencyVO.class);
         //convert to CoinPrices
-        entity = new CoinPrices();
+        entity = new CoinPrice();
         entity.setCode(CurrencyCode.valueOf(vo.getCode()));
         entity.setSymbol(vo.getSymbol());
         entity.setRate(vo.getRate());
@@ -57,7 +57,7 @@ class CoinPriceRepositoryTest {
         coinPriceRepository.flush();
         assertNotNull(this.entity.getId());
 
-        List<CoinPrices> list = coinPriceRepository.findAll();
+        List<CoinPrice> list = coinPriceRepository.findAll();
         assertFalse(list.isEmpty());
     }
 
@@ -65,7 +65,7 @@ class CoinPriceRepositoryTest {
     @Transactional
     @Order(2)
     void testRead() {
-        Optional<CoinPrices> foundCoinPrices = coinPriceRepository.findById(1L);
+        Optional<CoinPrice> foundCoinPrices = coinPriceRepository.findById(1L);
         assertTrue(foundCoinPrices.isPresent());
         assertEquals(1L, foundCoinPrices.get().getId());
     }
@@ -78,8 +78,8 @@ class CoinPriceRepositoryTest {
         assertNotNull(this.entity);
 
         this.entity.setSymbol("New Value");
-        CoinPrices updatedCoinPrices = coinPriceRepository.saveAndFlush(entity);
-        assertEquals("New Value", updatedCoinPrices.getSymbol());
+        CoinPrice updatedCoinPrice = coinPriceRepository.saveAndFlush(entity);
+        assertEquals("New Value", updatedCoinPrice.getSymbol());
     }
 
     @Test
@@ -87,7 +87,7 @@ class CoinPriceRepositoryTest {
     @Transactional
     void testDelete() {
         coinPriceRepository.deleteById(1L);
-        Optional<CoinPrices> deletedCoinPrices = coinPriceRepository.findById(1L);
+        Optional<CoinPrice> deletedCoinPrices = coinPriceRepository.findById(1L);
         assertFalse(deletedCoinPrices.isPresent());
     }
 }

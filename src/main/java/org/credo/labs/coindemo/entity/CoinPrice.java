@@ -33,7 +33,7 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicUpdate
 @DynamicInsert
 @ToString
-public class CoinPrices implements Serializable {
+public class CoinPrice implements Serializable {
     @Serial
     private static final long serialVersionUID = -712263097189709942L;
 

@@ -12,7 +12,7 @@ import okhttp3.Response;
 import org.credo.labs.coindemo.core.client.OkHttpSingleton;
 import org.credo.labs.coindemo.core.version.model.Version;
 import org.credo.labs.coindemo.core.web.util.RestfulApiResponse;
-import org.credo.labs.coindemo.entity.CoinPrices;
+import org.credo.labs.coindemo.entity.CoinPrice;
 import org.credo.labs.coindemo.util.JsonUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -53,24 +53,24 @@ public class CoinPriceControllerTest {
 
     @AfterEach
     void tearDown() throws IOException {
-        CoinPrices coinPrices = testFindByCode();
-        if (null != coinPrices) {
-            testDeleteById(coinPrices);
+        CoinPrice coinPrice = testFindByCode();
+        if (null != coinPrice) {
+            testDeleteById(coinPrice);
         }
     }
 
     @Test
     @Order(1)
     void testCreateCoinPrice() throws IOException {
-        CoinPrices coinPrices = testFindByCode();
-        assertNotNull(coinPrices);
-        assertEquals("JPY", coinPrices.getCode().name());
-        assertEquals("&haha", coinPrices.getSymbol());
-        assertEquals("12345.1234", coinPrices.getRate());
-        assertEquals("lorem ipsum", coinPrices.getDescription());
-        assertEquals("22222.2222", coinPrices.getRateFloat().toString());
-        assertNotNull(coinPrices.getCreated());
-        assertNotNull(coinPrices.getUpdated());
+        CoinPrice coinPrice = testFindByCode();
+        assertNotNull(coinPrice);
+        assertEquals("JPY", coinPrice.getCode().name());
+        assertEquals("&haha", coinPrice.getSymbol());
+        assertEquals("12345.1234", coinPrice.getRate());
+        assertEquals("lorem ipsum", coinPrice.getDescription());
+        assertEquals("22222.2222", coinPrice.getRateFloat().toString());
+        assertNotNull(coinPrice.getCreated());
+        assertNotNull(coinPrice.getUpdated());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class CoinPriceControllerTest {
             assertEquals(HttpStatus.OK.value(), response.code());
             assertNotNull(response.body());
 
-            RestfulApiResponse<List<CoinPrices>> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<List<CoinPrices>>>() {
+            RestfulApiResponse<List<CoinPrice>> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<List<CoinPrice>>>() {
             });
             assertEquals("0", restfulApiResponse.getCode());
             assertFalse(restfulApiResponse.getData().isEmpty());
@@ -108,20 +108,20 @@ public class CoinPriceControllerTest {
             assertEquals(HttpStatus.OK.value(), response.code());
             assertNotNull(response.body());
 
-            RestfulApiResponse<CoinPrices> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<CoinPrices>>() {
+            RestfulApiResponse<CoinPrice> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<CoinPrice>>() {
             });
             assertEquals("0", restfulApiResponse.getCode());
             assertNotNull(restfulApiResponse.getData());
         }
     }
 
-    private CoinPrices testFindByCode() throws IOException {
+    private CoinPrice testFindByCode() throws IOException {
         Request request = new Request.Builder().url(baseUrl + "/code/JPY").get().build();
         try (Response response = client.newCall(request).execute()) {
             assertEquals(HttpStatus.OK.value(), response.code());
             assertNotNull(response.body());
 
-            RestfulApiResponse<CoinPrices> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<CoinPrices>>() {
+            RestfulApiResponse<CoinPrice> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<CoinPrice>>() {
             });
             assertEquals("0", restfulApiResponse.getCode());
 
@@ -132,13 +132,13 @@ public class CoinPriceControllerTest {
     /**
      * Delete coin price by ID
      */
-    private void testDeleteById(CoinPrices coinPrices) throws IOException {
-        Request request = new Request.Builder().url(baseUrl + "/" + coinPrices.getId()).delete().build();
+    private void testDeleteById(CoinPrice coinPrice) throws IOException {
+        Request request = new Request.Builder().url(baseUrl + "/" + coinPrice.getId()).delete().build();
         try (Response response = client.newCall(request).execute()) {
             assertEquals(HttpStatus.OK.value(), response.code());
             assertNotNull(response.body());
 
-            RestfulApiResponse<CoinPrices> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<CoinPrices>>() {
+            RestfulApiResponse<CoinPrice> restfulApiResponse = JsonUtils.asObject(response.body().string(), new TypeReference<RestfulApiResponse<CoinPrice>>() {
             });
             assertEquals("0", restfulApiResponse.getCode());
         }

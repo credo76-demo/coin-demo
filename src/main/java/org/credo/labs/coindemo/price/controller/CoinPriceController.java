@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.credo.labs.coindemo.coin_desk.vo.BpiCurrencyVO;
 import org.credo.labs.coindemo.core.web.advice.ApiResponse;
-import org.credo.labs.coindemo.entity.CoinPrices;
+import org.credo.labs.coindemo.entity.CoinPrice;
 import org.credo.labs.coindemo.price.enums.CurrencyCode;
 import org.credo.labs.coindemo.price.service.CoinPriceService;
 import org.springframework.validation.annotation.Validated;
@@ -37,7 +37,7 @@ public class CoinPriceController {
      */
     @PostMapping
     @ApiResponse
-    public CoinPrices createCoinPrice(@RequestBody @Valid BpiCurrencyVO vo) {
+    public CoinPrice createCoinPrice(@RequestBody @Valid BpiCurrencyVO vo) {
         return coinPriceService.create(vo);
     }
 
@@ -46,13 +46,13 @@ public class CoinPriceController {
      */
     @GetMapping("/{id}")
     @ApiResponse
-    public CoinPrices getCoinPriceById(@PathVariable Long id) {
+    public CoinPrice getCoinPriceById(@PathVariable Long id) {
         return coinPriceService.getCoinPriceById(id);
     }
 
     @GetMapping("/code/{code}")
     @ApiResponse
-    public CoinPrices getCoinPriceByCode(@PathVariable("code") CurrencyCode code) {
+    public CoinPrice getCoinPriceByCode(@PathVariable("code") CurrencyCode code) {
         return coinPriceService.getCoinPriceByCode(code);
     }
 
@@ -61,7 +61,7 @@ public class CoinPriceController {
      */
     @PutMapping("/{id}")
     @ApiResponse
-    public CoinPrices updateCoinPrice(@PathVariable Long id, @RequestBody @Valid BpiCurrencyVO vo) {
+    public CoinPrice updateCoinPrice(@PathVariable Long id, @RequestBody @Valid BpiCurrencyVO vo) {
         return coinPriceService.update(id, vo);
     }
 
@@ -79,7 +79,7 @@ public class CoinPriceController {
      */
     @GetMapping("/list")
     @ApiResponse
-    public List<CoinPrices> getAllCoinPrices() {
+    public List<CoinPrice> getAllCoinPrices() {
         return coinPriceService.getAllCoinPrices();
     }
 }

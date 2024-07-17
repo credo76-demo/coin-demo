@@ -30,7 +30,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @Slf4j
 public class CoinPriceControllerTest {
     private final OkHttpClient client = OkHttpSingleton.getInstance();
-    private final String baseUrl = "http://localhost:8080/coin-api/v1/price";
+    private final String baseUrl = "http://localhost:8080/api/v1/price";
 
     /**
      * Create a sample entry before each test
@@ -75,7 +75,7 @@ public class CoinPriceControllerTest {
 
     @Test
     void testHealthCheck() throws IOException {
-        Request request = new Request.Builder().url("http://localhost:8080/coin-demo/version").get().build();
+        Request request = new Request.Builder().url("http://localhost:8080/api/version").get().build();
         try (Response response = client.newCall(request).execute()) {
             assertEquals(HttpStatus.OK.value(), response.code());
             assertNotNull(response.body());

@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * CoinPriceController
+ * A endpoint to handle coin price related operations.
  */
 @RestController
-@RequestMapping("/coin-api/v1/price")
+@RequestMapping("/api/v1/price")
 @Validated
 @Slf4j
 public class CoinPriceController {
@@ -33,7 +33,7 @@ public class CoinPriceController {
     }
 
     /**
-     * Create coin price
+     * It will create a new coin price if it does not exist.
      */
     @PostMapping
     @ApiResponse
@@ -42,7 +42,7 @@ public class CoinPriceController {
     }
 
     /**
-     * Get coin price by id
+     * Get coin price by id.
      */
     @GetMapping("/{id}")
     @ApiResponse
@@ -50,6 +50,9 @@ public class CoinPriceController {
         return coinPriceService.getCoinPriceById(id);
     }
 
+    /**
+     * Get coin price by code.
+     */
     @GetMapping("/code/{code}")
     @ApiResponse
     public CoinPrice getCoinPriceByCode(@PathVariable("code") CurrencyCode code) {
@@ -57,7 +60,7 @@ public class CoinPriceController {
     }
 
     /**
-     * Update coin price
+     * Update coin price by id.
      */
     @PutMapping("/{id}")
     @ApiResponse
@@ -66,7 +69,7 @@ public class CoinPriceController {
     }
 
     /**
-     * Delete coin price by id
+     * Delete coin price by id.
      */
     @DeleteMapping("/{id}")
     @ApiResponse
@@ -75,7 +78,7 @@ public class CoinPriceController {
     }
 
     /**
-     * Get all coin prices
+     * Get all coin prices.
      */
     @GetMapping("/list")
     @ApiResponse

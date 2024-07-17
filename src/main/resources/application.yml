@@ -43,7 +43,7 @@ logging:
 
 coin-demo:
   info:
-    version-path: /coin-demo/version
+    version-path: /api/version
     release-time: "@RELEASE_TIME@"
     release-version: "@version@"
   scheduling:

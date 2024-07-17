@@ -9,7 +9,7 @@ import java.time.temporal.TemporalAmount;
 
 public final class DateUtils {
     public final static String DATETIME_ISO_PATTERN = "yyyy-MM-dd'T'HH:mm:ss'Z'";
-    public final static String DATETIME_DB_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public final static String DATETIME_DB_PATTERN = "yyyy/MM/dd HH:mm:ss";
     public final static String DATE_ISO_PATTERN = "yyyy-MM-dd";
     public final static String TIME_ISO_PATTERN = "HH:mm:ss";
 

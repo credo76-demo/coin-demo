@@ -1,0 +1,199 @@
+openapi: "3.1.0"
+info:
+  title: "Coin Demo API"
+  description: "This project is a Spring Boot application for managing coin prices, including CRUD operations with a H2 database."
+  version: "0.0.1-SNAPSHOT"
+servers:
+  - url: "http://localhost:8080"
+paths:
+  /api/version:
+    get:
+      summary: "Show the version of the application."
+      description: "A health check endpoint which returns the version of the application."
+      operationId: "showVersion"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/Version"
+  /api/v1/price:
+    post:
+      summary: "Create a new coin price."
+      description: "It will create a new coin price if it does not exist."
+      operationId: "createCoinPrice"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BpiCurrencyVO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CoinPrice"
+  /api/v1/price/code/{code}:
+    get:
+      summary: "Get coin price by currency code."
+      description: "It will return the coin price by currency code."
+      operationId: "getCoinPriceByCode"
+      parameters:
+        - name: "code"
+          in: "path"
+          required: true
+          schema:
+            type: "string"
+            enum:
+              - "USD"
+              - "EUR"
+              - "GBP"
+              - "JPY"
+              - "BTC"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CoinPrice"
+  /api/v1/price/list:
+    get:
+      summary: "Get coin prices list."
+      description: "It will return the list of all coin prices."
+      operationId: "getAllCoinPrices"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/CoinPrice"
+  /api/v1/price/{id}:
+    get:
+      summary: "Get coin price by id."
+      description: "It will return the coin price by id."
+      operationId: "getCoinPriceById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CoinPrice"
+    put:
+      summary: "Update coin price by id."
+      operationId: "updateCoinPrice"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BpiCurrencyVO"
+        required: true
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CoinPrice"
+    delete:
+      summary: "Delete coin price by id."
+      operationId: "deleteCoinPriceById"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+components:
+  schemas:
+    Version:
+      type: "object"
+      properties:
+        projectName:
+          type: "string"
+        buildTime:
+          type: "string"
+        releaseTime:
+          type: "string"
+        releaseVersion:
+          type: "string"
+        schedulingEnabled:
+          description: "A scheduling toggle"
+          type: "string"
+    BigDecimal:
+      type: "object"
+      properties: { }
+    BpiCurrencyVO:
+      type: "object"
+      properties:
+        code:
+          type: "string"
+        symbol:
+          type: "string"
+        rate:
+          type: "string"
+        description:
+          type: "string"
+        rate_float:
+          $ref: "#/components/schemas/BigDecimal"
+    CoinPrice:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        code:
+          type: "string"
+          description: "Currency code"
+          enum:
+            - "USD"
+            - "EUR"
+            - "GBP"
+            - "JPY"
+            - "BTC"
+          example: "JPY"
+        codeName:
+          description: "Currency I18N name"
+          type: "string"
+        symbol:
+          type: "string"
+        rate:
+          type: "string"
+        description:
+          type: "string"
+        rateFloat:
+          $ref: "#/components/schemas/BigDecimal"
+        updated:
+          type: "string"
+          format: "yyyy/MM/dd HH:mm:ss"
+        created:
+          type: "string"
+          format: "yyyy/MM/dd HH:mm:ss"
+          example: "2021/01/01 00:00:00"
+
+

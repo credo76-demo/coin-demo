@@ -33,18 +33,19 @@ CREATE INDEX idx_code ON coin_prices (code);
 CREATE INDEX idx_updated ON coin_prices (updated);
 ```
 ### 2. Feature
-- RESTful API Endpoints: `CoinPriceController.java`
+- The main API Controller: `CoinPriceController.java`
+- Openapi Specification: `spec/coin_demo-openapi.yaml`
 - Scheduled Task: `ScheduledTasks.java`
   
 ### 3. Testing
-- RESTful API Testing, refer to the [CoinPriceControllerTest.java](https://github.com/credo76-demo/coin-demo/blob/main/src/test/java/org/credo/labs/coindemo/price/controller/CoinPriceControllerTest.java)
+- API Testing, refer to the [CoinPriceControllerTest.java](https://github.com/credo76-demo/coin-demo/blob/main/src/test/java/org/credo/labs/coindemo/price/controller/CoinPriceControllerTest.java)
 
 ### 4. 實作加分題
 - AOP 應用 
   - a. 印出所有 API 被呼叫: `LoggingApiAspect.java`。
   - b. Error handling 處理 API response: `GlobalExceptionHandler.java`、`GlobalResponseAdvice.java`。
 - 多語系設計: 簡易 `messageSource` 設定，顯示欄位於 `CoinPrice.codeName`。
-- design pattern 實作
+- Design pattern 實作
   - Template Method Pattern in scheduling: `AbstractPriceProvider.java`、`CoinDeskProvider.java`。
   - Singleton Pattern in HTTP client: `OkHttpSingleton.java`。
 

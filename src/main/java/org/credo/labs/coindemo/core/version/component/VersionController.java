@@ -20,19 +20,25 @@ public class VersionController {
     @Value("${coin-demo.info.release-version}")
     private String releaseVersion;
 
+    @Value("${coin-demo.scheduling.enabled}")
+    private String schedulingEnabled;
+
     final BuildProperties buildProperties;
 
     public VersionController(@Autowired(required = false) @Nullable BuildProperties buildProperties) {
         this.buildProperties = buildProperties;
     }
 
+    /**
+     * A health check endpoint which returns the version of the application.
+     */
     @CrossOrigin
     @GetMapping
     public Version showVersion() {
         Version version = new Version();
         version.setReleaseTime(releaseTime);
         version.setReleaseVersion(releaseVersion);
-
+        version.setSchedulingEnabled(schedulingEnabled);
 
         if (null != buildProperties) {
             version.setBuildTime(buildProperties.getTime().toString());

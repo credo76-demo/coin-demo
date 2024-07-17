@@ -5,13 +5,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.credo.labs.coindemo.config.SchedulingConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Component;
 
-@Component
 @Slf4j
+@Component
+@ConditionalOnProperty(name = "coin-demo.scheduling.enabled", havingValue = "true", matchIfMissing = true)
 public class ScheduledTasks {
 
     private final SchedulingConfig schedulingConfig;

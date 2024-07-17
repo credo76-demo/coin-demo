@@ -14,4 +14,5 @@ public class Version implements Serializable {
     private String buildTime;
     private String releaseTime;
     private String releaseVersion;
+    private String schedulingEnabled;
 }

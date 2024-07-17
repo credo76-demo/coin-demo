@@ -67,7 +67,7 @@ public class CoinPriceControllerTest {
         assertEquals("JPY", coinPrice.getCode().name());
         assertEquals("&haha", coinPrice.getSymbol());
         assertEquals("12345.1234", coinPrice.getRate());
-        assertEquals("lorem ipsum", coinPrice.getDescription());
+        assertEquals("日圓", coinPrice.getDescription());
         assertEquals("22222.2222", coinPrice.getRateFloat().toString());
         assertNotNull(coinPrice.getCreated());
         assertNotNull(coinPrice.getUpdated());

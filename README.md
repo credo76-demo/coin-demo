@@ -40,6 +40,7 @@ CREATE INDEX idx_updated ON coin_prices (updated);
   
 ### 3. Testing
 - API Testing, refer to the [CoinPriceControllerTest.java](https://github.com/credo76-demo/coin-demo/blob/main/src/test/java/org/credo/labs/coindemo/price/controller/CoinPriceControllerTest.java)
+  - OkHttp3 過不了自簽憑證，請使用 `DEV` profile 測試 Spring Application。
 
 ### 4. 實作加分題
 - AOP 應用 
@@ -49,6 +50,7 @@ CREATE INDEX idx_updated ON coin_prices (updated);
 - Design pattern 實作
   - Template Method Pattern in scheduling: `AbstractPriceProvider.java`、`CoinDeskProvider.java`。
   - Singleton Pattern in HTTP client: `OkHttpSingleton.java`。
+  - 簡易 SSL 設定: 8443 port，使用自簽憑證 (請使用 Browser/HTTP Client 測試)。
 
 ### Clone the repository
 ```bash

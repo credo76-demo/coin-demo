@@ -5,6 +5,9 @@ info:
   version: "0.0.1-SNAPSHOT"
 servers:
   - url: "http://localhost:8080"
+    description: "Local server"
+  - url: "https://localhost:8443"
+    description: "Local server with SSL"
 paths:
   /api/version:
     get:
